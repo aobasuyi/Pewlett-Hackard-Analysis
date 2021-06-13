@@ -46,7 +46,7 @@ ORDER BY r.emp_no ASC, r.to_date DESC;
 **Finding:**<br />
 - There are more than **90,000** employees who are eligible for retirement by title.
 
-- Senior engineers (*n* = 29,414) are largest number of employees who are about to retire.  Manager (*n* = 2) are the least number of employees by title who are eligible for retirement.
+- Senior engineers (*n* = 29,414) are largest number of employees who are about to retire.  Only (*n* = 2) managers are eligible for retirement by title.
 
 	<br /> ![Image](Resources/retiring_titles.png) <br />
 
@@ -88,7 +88,7 @@ WHERE (de.to_date = '9999-01-01')
 ## Summary
 The following provide more insight into the upcoming "silver tsunami" at Pewlett-Hackard. <br />
 
-A. **The number of roles that will need to be filled:**<br />
+a. **The number of roles that will need to be filled:**<br />
 
 To determine the current employees who are eligible for retirement, a filter was added to the original query since some people from the original list may not even work with the company anymore.
 
@@ -109,11 +109,13 @@ ORDER BY e.emp_no;
 
 ```
 **Finding:**
-- The number of roles that will need to be filled is about  **73,000** employees, which is lower than the number of all employees (*n* = 90,000) eligible for retirement by title.
+- The number of roles that will need to be filled is now about  **73,000** employees, which is lower than the number of all employees (*n* = 90,000) eligible for retirement by title.
+- Senior engineers (*n* = 25, 916) are still the largest number of employees who are about to retire.  There are still only (*n* = 2) managers who are eligible for retirement by title.
 
 	 <br /> ![Image](Resources/retiring_titles_current.png) <br />
 
-2.  **Will there be enough qualified, retirement-ready employees in the departments to mentor the next generation of Pewlett Hackard employees?**<br />
+b.  **Will there be enough qualified, retirement-ready employees in the departments to mentor the next generation of Pewlett Hackard employees?**<br />
 - There are about **1500** employees who are eligible for the mentorship program and about **73,000** employees who are eligible for retirement. 
-- There are not enough eligible employees to mentor the next generation of PH employees. The ratio of retirement-ready to mentorship-eligible employees range from 35:1 to 100:1.
+
+- There are not enough eligible employees to mentor the next generation of PH employees. The ratio of retirement-ready to mentorship-eligible employees range from **20:1** for assistant engineers, **57:1** for senior staff to **89:1** for senior engineers.
 
