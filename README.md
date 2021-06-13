@@ -1,7 +1,7 @@
 # Pewlett-Hackard-Analysis
 
 ## Overview of the analysis
-A human resources analyst will be assisted with updating the Pewlett Hackard employees data currently available in the form of 6 CSV files. The tasks include building an employee DB with SQL by applying data modelling, engineering and analysis skills to generate a list of all employees eligible for the retirement package and to determine;
+A human resources analyst will be assisted with updating the Pewlett Hackard employees data currently available in the form of six CSV files. The tasks include building an employee DB with SQL by applying data modelling, engineering and analysis skills to generate a list of all employees eligible for the retirement package and to determine
 - the number of retiring employees by title.
 - the employees who are eligible to participate in a mentorship program.
 
@@ -13,9 +13,9 @@ A human resources analyst will be assisted with updating the Pewlett Hackard emp
 
 ## Results
 
-A.  **The Number of Retiring Employees by Title:**<br /> <br />
+A.  **The Number of Retiring Employees by Title:**<br /> 
 
-A query was written and executed to create a **Retirement Titles** table for employees who are born between January 1, 1952 and December 31, 1955. Duplicate entries for some employees  were removed using the *DISTINCT ON* statement as shown
+A query was written and executed to create a **Retirement Titles** table for employees who are born between January 1, 1952 and December 31, 1955. Duplicate entries for some employees  were removed using the *DISTINCT ON* statement as shown,
 
 ```
 -- The number of retiring employees by title
@@ -44,14 +44,15 @@ ORDER BY r.emp_no ASC, r.to_date DESC;
 ```
 
 **Finding:**<br />
-1. There are more than **90,000** employees who are eligible for retirement by title.
+- There are more than **90,000** employees who are eligible for retirement by title.
 
-2. Senior engineers (*n* = 29,414) are largest number of employees who are about to retire.  Manager anagers (*n* = 2) are the least number of employees by title who are eligible for retirement.
+- Senior engineers (*n* = 29,414) are largest number of employees who are about to retire.  Only (*n* = 2) managers are eligible for retirement by title.
 
-<br /> ![Image](Resources/retiring_titles.png) <br />
+	<br /> ![Image](Resources/retiring_titles.png) <br />
 
-B.  **The Employees Eligible for the Mentorship Program:**<br /> <br />
-The code determining for creating the mentorship-eligibility table:
+B.  **The Employees Eligible for the Mentorship Program:**<br /> 
+
+The code for creating the mentorship-eligibility table is shown:
 
 ```
 --  The employees eligible for the mentorship program
@@ -76,20 +77,20 @@ WHERE (de.to_date = '9999-01-01')
 
 **Finding:** <br />
 
-1. There are more than **1500** employees who are eligible for the mentorship program.
+- There are more than **1500** employees who are eligible for the mentorship program.
 
-2. Senior staff (*n* = 441) are the largest number of employees eligible for the mentorship program. Technique leaders are the least number of mentorship-eligibble employees by title.
+- Senior staff (*n* = 441) are the largest number of employees eligible for the mentorship program. Only (*n* = 77 ) Technique leaders are eligible for the mentorship program.
 
 <br /> ![Image](Resources/mentorship_eligibility_titles.png) <br />
 
 
 
-**Summary:**<br /> <br />
-The following provide more insight into the upcoming "silver tsunami." at Pewlett-Hackard <br />
+## Summary
+The following provide more insight into the upcoming "silver tsunami" at Pewlett-Hackard. <br />
 
-A.  **The number of roles that need to be filled**<br />
+a. **The number of roles that will need to be filled:**<br />
 
-- To determine the current employees who are eligible for retirement, a filter was added to the original query since some people from the original list may not even work with the company anymore.
+To determine the current employees who are eligible for retirement, a filter was added to the original query since some people from the original list may not even work with the company anymore.
 
 ```
 SELECT DISTINCT ON (e.emp_no) e.emp_no,
@@ -107,12 +108,26 @@ WHERE (e.birth_date BETWEEN '1952-01-01' AND '1955-12-31')
 ORDER BY e.emp_no;
 
 ```
+
+To count the current retirement-eligible employees by their most recent job title:
+```
+-- Retrieve current-eligible employees by their most recent job title
+SELECT COUNT(rc.title), rc.title
+INTO retiring_titles_current
+FROM retirement_current AS rc
+GROUP BY rc.title
+ORDER BY COUNT(rc.title) DESC;
+
+```
 **Finding:**
-- The number of roles that will need to be filled will be about  **73,000** employees. This number is lower than the original list of all **90,000** employees eligible for retirement by title.
+- The number of roles that will need to be filled is now about  **73,000** employees, which is lower than the number of all employees (*n* = 90,000) eligible for retirement by title.
+- Senior engineers (*n* = 25, 916) are still the largest number of employees who are about to retire.  There are still only (*n* = 2) managers who are eligible for retirement by title.
 
- <br /> ![Image](Resources/Resources/retiring_titles_current.png) <br />
+	 <br /> ![Image](Resources/retiring_titles_current.png) <br />
 
-B  **Will there be enough qualified, retirement-ready employees in the departments to mentor the next generation of Pewlett Hackard employees?**<br />
+b.  **Will there be enough qualified, retirement-ready employees in the departments to mentor the next generation of Pewlett Hackard employees?**<br />
+
 - There are about **1500** employees who are eligible for the mentorship program and about **73,000** employees who are eligible for retirement. 
-- There are not enough eligible employees to mentor the next generation of PH employees. The ratio of retirement-ready to mentorship-eligible employees range from 35:1 to 100:1.
+
+- There are not enough eligible employees to mentor the next generation of PH employees. The ratio of retirement-ready to mentorship-eligible employees range from **20:1** for assistant engineers, **57:1** for senior staff to **89:1** for senior engineers.
 
