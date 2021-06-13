@@ -108,6 +108,17 @@ WHERE (e.birth_date BETWEEN '1952-01-01' AND '1955-12-31')
 ORDER BY e.emp_no;
 
 ```
+
+To count the current retirement-eligible employees by their most recent job title:
+```
+-- Retrieve current-eligible employees by their most recent job title
+SELECT COUNT(rc.title), rc.title
+INTO retiring_titles_current
+FROM retirement_current AS rc
+GROUP BY rc.title
+ORDER BY COUNT(rc.title) DESC;
+
+```
 **Finding:**
 - The number of roles that will need to be filled is now about  **73,000** employees, which is lower than the number of all employees (*n* = 90,000) eligible for retirement by title.
 - Senior engineers (*n* = 25, 916) are still the largest number of employees who are about to retire.  There are still only (*n* = 2) managers who are eligible for retirement by title.
@@ -115,6 +126,7 @@ ORDER BY e.emp_no;
 	 <br /> ![Image](Resources/retiring_titles_current.png) <br />
 
 b.  **Will there be enough qualified, retirement-ready employees in the departments to mentor the next generation of Pewlett Hackard employees?**<br />
+
 - There are about **1500** employees who are eligible for the mentorship program and about **73,000** employees who are eligible for retirement. 
 
 - There are not enough eligible employees to mentor the next generation of PH employees. The ratio of retirement-ready to mentorship-eligible employees range from **20:1** for assistant engineers, **57:1** for senior staff to **89:1** for senior engineers.
