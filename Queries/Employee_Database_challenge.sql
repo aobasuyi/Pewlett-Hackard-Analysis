@@ -48,19 +48,18 @@ WHERE (de.to_date = '9999-01-01')
 	ORDER BY e.emp_no;
 
 
--- Retrieve mentorship-eligible employees by their most recent job title
+-- 2.1: Retrieve mentorship-eligible employees by their most recent job title
 SELECT COUNT(me.emp_no), me.title
--- INTO mentorship_eligible_titles
+INTO mentorship_eligible_title
 FROM mentorship_eligibilty as me
 GROUP BY me.title
 -- Update the data output in order
 ORDER BY me.title;
 
 
--- Deliverable 3 Queries
 
--- 3.1 : The number of retirement eLigible employees by title and current data
-SELECT e.emp_no,
+-- 3: The number of retirement eLigible employees by title and current data
+SELECT DISTINCT ON (e.emp_no) e.emp_no,
     e.first_name,
 e.last_name,
     t.title,
@@ -71,34 +70,26 @@ FROM employees as e
 INNER JOIN titles as t
 ON (e.emp_no = t.emp_no)
 WHERE (e.birth_date BETWEEN '1952-01-01' AND '1955-12-31')
-	--AND (e.hire_date BETWEEN '1985-01-01' AND '1988-12-31')
 	AND (t.to_date = '9999-01-01')
 ORDER BY e.emp_no;
 
-Select * from retirement_curent;
 
--- 3.1: Use Dictinct with Orderby to remove duplicate rows
-SELECT DISTINCT ON (rc.emp_no) rc.emp_no, 
-rc.first_name,
-rc.last_name,
-rc.title
--- INTO unique_titles
-FROM retirement_curent AS rc
-ORDER BY rc.emp_no ASC, rc.to_date DESC;
-
+-- 3.1: Retrieve current-eligible employees by their most recent job title
 SELECT COUNT(rc.title), rc.title
--- INTO retiring_titles
-FROM retirement_curent AS rc
+INTO retiring_titles_current
+FROM retirement_current AS rc
 GROUP BY rc.title
 ORDER BY COUNT(rc.title) DESC;
 
 
 
-DROP TABLE retirement_curent CASCADE;
+
 SELECT * FROM retirement_titles;
 SELECT * FROM unique_titles;
 SELECT * FROM retiring_titles;
 SELECT * FROM mentorship_eligibilty;
+SELECT * FROM mentorship_eligible_titles;
+SELECT * FROM retiring_titles_current;
 
 SELECT * FROM dept_emp;
 SELECT * from employees;
@@ -107,4 +98,4 @@ SELECT * FROM departments;
 SELECT * FROM dept_manager;
 
 SELECT * FROM titles
--- ORDER BY to_Date DESC;
+
